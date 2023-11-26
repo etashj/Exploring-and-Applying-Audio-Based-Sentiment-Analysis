@@ -155,7 +155,5 @@ cython_debug/
 *.zip
 *.tar.gz
 latex/
-data/annotations
-data/clips_45seconds
-data/clips_45seconds_wav
+data/
 .DS_Store

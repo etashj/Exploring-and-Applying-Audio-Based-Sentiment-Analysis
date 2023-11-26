@@ -15,6 +15,8 @@ import matplotlib.pyplot as plt
 import torch
 import torch.nn as nn
 
+from sklearn.model_selection import train_test_split
+
 def load_and_clip_audio(file_path, clipNum):
     audio, sr = librosa.load(file_path, sr=None)
     print(file_path.split('/')[-1] + " - " + str(clipNum))
@@ -86,6 +88,14 @@ df['CLIP'] = df['SONG_ID'].apply(genClip)
 
 real_outputs = df[['AROUSAL_AVG', 'VALENCE_AVG']].values
 
+# Split the dataset into training and test sets
+train_df, test_df = train_test_split(df, test_size=0.2, random_state=42)  # Adjust test_size as needed
+
+# Create datasets for training and test sets
+train_dataset = MyDataset(train_df['FILEPATH'].tolist(), train_df['CLIP'].tolist(), train_df[['AROUSAL_AVG', 'VALENCE_AVG']].values)
+test_dataset = MyDataset(test_df['FILEPATH'].tolist(), test_df['CLIP'].tolist(), test_df[['AROUSAL_AVG', 'VALENCE_AVG']].values)
+
+
 dataset = MyDataset(df['FILEPATH'].tolist(), df['CLIP'].tolist(), real_outputs)
 
 # Example usage:
@@ -109,18 +119,31 @@ input_data = torch.rand((batch_size, sequence_length, input_size))
 target_coordinates = torch.rand((batch_size, 2))
 '''
 batch_size = 50
-dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=False)
+train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)  # Shuffle the training set
+test_dataloader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)  # No need to shuffle the test set
 
 # Training loop
-num_epochs = 2
+num_epochs = 1
+losses = []
+
+num_epochs = 5
+train_losses = []
+val_losses = []
+train_accuracies = []
+val_accuracies = [] 
 
 for epoch in range(num_epochs):
-    for batch in dataloader:
-        input_data, target_coordinates = batch
+    epoch_train_losses = []
+    epoch_val_losses = []
+    epoch_train_accuracies = []
+    epoch_val_accuracies = [] 
 
-        # Forward pass
+    # Training
+    model.train()
+    for batch in train_dataloader:
+        input_data, target_coordinates = batch
         output_coordinates = model(input_data)
-        print(output_coordinates[1].shape)
+
         # Compute the loss
         loss = criterion(output_coordinates[1], target_coordinates)
 
@@ -129,19 +152,76 @@ for epoch in range(num_epochs):
         loss.backward()
         optimizer.step()
 
-    # Print the loss for monitoring during training
-    print(f'Epoch [{epoch+1}/{num_epochs}], Loss: {loss.item():.4f}')
+        epoch_train_losses.append(loss.item())
+
+        predictions = output_coordinates[1].argmax(dim=1)  # Assuming classification task
+        accuracy = (predictions == target_coordinates.argmax(dim=1)).float().mean().item()
+        epoch_train_accuracies.append(accuracy)
+
+    # Validation
+    model.eval()
+    with torch.no_grad():
+        predictions_list = []
+        targets_list = []
+        for batch in test_dataloader:
+            input_data, target_coordinates = batch
+            output_coordinates = model(input_data)
+
+            # Compute the loss
+            val_loss = criterion(output_coordinates[1], target_coordinates)
+            epoch_val_losses.append(val_loss.item())
+
+            # Save predictions and targets for Precision-Recall curve
+            predictions_list.append(output_coordinates[1].cpu().numpy())
+            targets_list.append(target_coordinates.cpu().numpy())
+
+            predictions = output_coordinates[1].argmax(dim=1)  # Assuming classification task
+            accuracy = (predictions == target_coordinates.argmax(dim=1)).float().mean().item()
+            epoch_val_accuracies.append(accuracy)
+            
+
+    avg_train_loss = np.mean(epoch_train_losses)
+    avg_val_loss = np.mean(epoch_val_losses)
+    avg_train_accuracy = np.mean(epoch_train_accuracies)
+    avg_val_accuracy = np.mean(epoch_val_accuracies)  
+    train_losses.append(avg_train_loss)
+    val_losses.append(avg_val_loss)
+    train_accuracies.append(avg_train_accuracy)
+    val_accuracies.append(avg_val_accuracy)
+
+    print(f'Epoch [{epoch + 1}/{num_epochs}], '
+          f'Train Loss: {avg_train_loss:.4f}, Val Loss: {avg_val_loss:.4f}, '
+          f'Train Accuracy: {avg_train_accuracy:.4f}, Val Accuracy: {avg_val_accuracy:.4f}')
+
+
 
 
 # Save the trained model
-torch.save(model.state_dict(), 'mel_rnn_model.pth')
+torch.save(model.state_dict(), 'models/10second.pth')
 
 
 
+plt.figure(figsize=(12, 4))
 
+plt.subplot(1, 2, 1)
+plt.plot(train_losses, label='Training Loss')
+plt.plot(val_losses, label='Validation Loss')
+plt.xlabel('Epoch')
+plt.ylabel('Loss')
+plt.title('Loss Curve')
+plt.legend()
 
+plt.subplot(1, 2, 2)
+plt.plot(train_accuracies, label='Training Accuracy')
+plt.plot(val_accuracies, label='Validation Accuracy')
+plt.xlabel('Epoch')
+plt.ylabel('Accuracy')
+plt.title('Accuracy Curve')
+plt.legend()
 
+plt.tight_layout()
 
+plt.savefig('results/10second.png')
 
-
+plt.show()
 
