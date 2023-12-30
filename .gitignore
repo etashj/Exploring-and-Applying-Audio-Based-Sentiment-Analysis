@@ -166,3 +166,4 @@ data/
 *.code-workspace
 /scripts/misc
 latex/
+presentation/
