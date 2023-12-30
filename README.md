@@ -1,2 +1,2 @@
-# intelligent emotion based music selection via cnn
+# Exploring and Applying Audio Based Sentiment Analysis
  
