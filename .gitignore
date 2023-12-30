@@ -154,6 +154,14 @@ cython_debug/
 
 *.zip
 *.tar.gz
-latex/
+latex/JACoW_template
+*.aux
+*.fls
+*.log
+*.fdb_latexmk
+*.synctex.gz
 data/
 .DS_Store
+*.sty
+*.code-workspace
+/scripts/misc
