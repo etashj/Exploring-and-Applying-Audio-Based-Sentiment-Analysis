@@ -1,0 +1,485 @@
+% !TeX spellcheck = en_GB
+% !TeX program = lualatex
+%
+% v 2.3  Feb 2019   Volker RW Schaa
+%		# changes in the collaboration therefore updated file "jacow-collaboration.tex"
+%		# all References with DOIs have their period/full stop before the DOI (after pp. or year)
+%		# in the author/affiliation block all ZIP codes in square brackets removed as it was not %         understood as optional parameter and ZIP codes had bin put in brackets
+%       # References to the current IPAC are changed to "IPAC'19, Melbourne, Australia"
+%       # font for ‘url’ style changed to ‘newtxtt’ as it is easier to distinguish "O" and "0"
+%
+\documentclass[a4paper,
+               %boxit,        % check whether paper is inside correct margins
+               %titlepage,    % separate title page
+               %refpage       % separate references
+               %biblatex,     % biblatex is used
+               %keeplastbox,   % flushend option: not to un-indent last line in References
+               %nospread,     % flushend option: do not fill with whitespace to balance columns
+               %hyphens,      % allow \url to hyphenate at "-" (hyphens)
+               %xetex,        % use XeLaTeX to process the file
+               %luatex,       % use LuaLaTeX to process the file
+               ]{jacow}
+%
+% ONLY FOR \footnote in table/tabular
+%
+\usepackage{pdfpages,multirow,ragged2e} %
+%
+% CHANGE SEQUENCE OF GRAPHICS EXTENSION TO BE EMBEDDED
+% ----------------------------------------------------
+% test for XeTeX where the sequence is by default eps-> pdf, jpg, png, pdf, ...
+%    and the JACoW template provides JACpic2v3.eps and JACpic2v3.jpg which
+%    might generates errors, therefore PNG and JPG first
+%
+\makeatletter%
+	\ifboolexpr{bool{xetex}}
+	 {\renewcommand{\Gin@extensions}{.pdf,%
+	                    .png,.jpg,.bmp,.pict,.tif,.psd,.mac,.sga,.tga,.gif,%
+	                    .eps,.ps,%
+	                    }}{}
+\makeatother
+
+% CHECK FOR XeTeX/LuaTeX BEFORE DEFINING AN INPUT ENCODING
+% --------------------------------------------------------
+%   utf8  is default for XeTeX/LuaTeX
+%   utf8  in LaTeX only realises a small portion of codes
+%
+\ifboolexpr{bool{xetex} or bool{luatex}} % test for XeTeX/LuaTeX
+ {}                                      % input encoding is utf8 by default
+ {\usepackage[utf8]{inputenc}}           % switch to utf8
+
+\usepackage[USenglish]{babel}
+
+%
+% if BibLaTeX is used
+%
+\ifboolexpr{bool{jacowbiblatex}}%
+ {%
+  \addbibresource{jacow-test.bib}
+  \addbibresource{biblatex-examples.bib}
+ }{}
+\listfiles
+
+%%
+%%   Lengths for the spaces in the title
+%%   \setlength\titleblockstartskip{..}  %before title, default 3pt
+%%   \setlength\titleblockmiddleskip{..} %between title + author, default 1em
+%%   \setlength\titleblockendskip{..}    %afterauthor, default 1em
+
+\begin{document}
+
+\title{preparation OF papers for \NoCaseChange{JACoW} conferences\thanks{Work supported by ...}}
+
+\author{A. N. Author\thanks{email address}, H. Coauthor, Name of Institute or Affiliation, City, Country \\
+		P. Contributor\textsuperscript{1}, Name of Institute or Affiliation, City, Country \\
+		\textsuperscript{1}also at Name of Secondary Institute or Affiliation, City, Country}
+	
+\maketitle
+
+%
+\begin{abstract}
+   Many conference series have adopted the same standards
+   for electronic publication and have joined the Joint
+   Accelerator Conferences Website (JACoW) collaboration
+   for the publication of their proceedings. This document
+   describes the common requirements for the submission of
+   papers to these conferences. Please consult individual
+   conference information for page limits, method of electronic
+   submission, etc. It is not intended that this should
+   be a tutorial in word processing; the aim is to explain the
+   particular requirements for electronic publication at
+   www.JACoW.org. The abstract itself is to act as a stand-alone
+   entity and, as such, should not include citations. Any acronyms 
+   should be expanded on their first occurrence, both in the 
+   abstract and in the rest of the paper. 
+   The abstract itself is to act as a stand-alone entity and, 
+   as such, should not include citations. Any acronyms should 
+   be expanded on their first occurrence, both in the abstract 
+   and in the rest of the paper.
+\end{abstract}
+
+
+\section{SUBMISSION OF PAPERS}
+Each author should submit the PDF file and all source
+files (text and figures) to enable the paper to be
+reconstructed if there are processing difficulties.
+
+\section{MANUSCRIPTS}
+Templates are provided for recommended software and
+authors are advised to use them. Please consult the
+individual conference help pages if questions arise.
+
+\subsection{General Layout}
+
+These instructions are a typical implementation of the
+requirements. Manuscripts should have:
+\begin{Itemize}
+    \item  Either A4 (\SI{21.0}{cm}~$\times$~\SI{29.7}{cm}; \SI{8.27}{in}~$\times$~\SI{11.69}{in}) or US
+           letter size (\SI{21.6}{cm}~$\times$~\SI{27.9}{cm}; \SI{8.5}{in}~$\times$~\SI{11.0}{in}) paper.
+    \item  Single-spaced text in two columns of \SI{82.5}{mm} (\SI{3.25}{in}) with \SI{5.3}{mm}
+           (\SI{0.2}{in}) separation. More recent versions of Microsoft Word have a default spacing of 1.5 lines;
+           authors must change this to 1 line.
+    \item  The text located within the margins specified in Table~\ref{tab:margins}.
+\end{Itemize}
+\begin{table}[!hbt]
+   \centering
+   \caption{Margin Specifications}
+   \begin{tabular}{lcc}
+       \toprule
+       \textbf{Margin} & \textbf{A4 Paper}                      & \textbf{US Letter Paper} \\
+       \midrule
+           Top         & \SI{37}{mm} (\SI{1.46}{in})            & \SI{0.75}{in} (\SI{19}{mm})        \\ %[3pt]
+          Bottom       & \SI{19}{mm} (\SI{0.75}{in})            & \SI{0.75}{in} (\SI{19}{mm})        \\ %[3pt]
+           Left        & \SI{20}{mm} (\SI{0.79}{in})            & \SI{0.79}{in} (\SI{20}{mm})        \\ %[3pt]
+           Right       & \SI{20}{mm} (\SI{0.79}{in})            & \SI{1.02}{in} (\SI{26}{mm})        \\
+       \bottomrule
+   \end{tabular}
+   \label{tab:margins}
+\end{table}
+
+\subsection{Fonts}
+
+In order to produce good Adobe Acrobat PDF files, authors
+using the `jacow' \LaTeX{} template are asked to use only the fonts
+defined in the ‘jacow’ class file (v2.3 of 2019/01/15) in standard, 
+bold (i.\,e., \verb|\textbf|) or italic (i.\,e., \verb|\textit|) form and
+symbols from the standard set of fonts. In Word use only
+Symbol and, depending on your platform, Times or Times New Roman
+fonts in standard, bold or italic form.
+
+The layout of the text on the page is illustrated in
+Fig.~\ref{fig:paper_layout}. Note that the paper’s title and the author list should
+be the width of the full page. Tables and figures may span
+the whole \SI{170}{mm} page width, if desired (see Fig.~\ref{fig:jacow_team}), but
+if they span both columns, they should be placed at either
+the top or bottom of a page to ensure proper flow of the
+text (which should flow from top to bottom in each column).
+
+\begin{figure}[!htb]
+   \centering
+   \includegraphics*[width=.7\columnwidth]{JACpic_mc}
+   \caption{Layout of papers.}
+   \label{fig:paper_layout}
+\end{figure}
+
+\begin{figure*}[!tbh]
+    \centering
+    \includegraphics*[width=\textwidth]{JACpic2}
+
+    \caption{Example of a full-width figure showing the JACoW Team at their annual
+    	     meeting in December 2018. This figure has a multi-line caption that has to be
+    	     justified rather than centred.}
+    \label{fig:jacow_team}
+\end{figure*}
+
+\subsection{Title and Author List}
+
+The title should use \SI{14}{pt} bold uppercase letters and be centred on the page.
+Individual letters may be lowercased to avoid misinterpretation (e.\,g., mW, GeV, 
+SPring-8, SwissFEL).
+To include a funding support statement, put an asterisk after the title and
+the support text at the bottom of the first column on page~1---in Word,
+use a text box; in \LaTeX, use $\backslash$\texttt{thanks}. See also the
+subsection on footnotes.
+
+The names of authors, their organizations/affiliations and
+postal addresses should be grouped by affiliation and
+listed in \SI{12}{pt} upper- and lowercase letters. The name of
+the submitting or primary author should be first, followed
+by the coauthors, alphabetically by affiliation. Where
+authors have multiple affiliations, the secondary affiliation
+may be indicated with a superscript, as shown in the
+author listing of this paper. See \textbf{ANNEX~A} for further examples.
+
+\subsection{Section Headings}
+
+Section headings should not be numbered. They should
+use  \SI{12}{pt}  bold  uppercase  letters  and  be  centred  in  the
+column. All section headings should appear directly above
+the text---there should never be a column break between a heading and the
+following paragraph.
+
+\subsection{Subsection Headings}
+
+Subsection  headings  should  not  be  numbered.
+They should use \SI{12}{pt} italic letters and be left aligned in the column.
+Subsection headings use Title Case (or Initial Caps)
+and should appear directly above the text---there should never be a column break
+between a subheading and the following paragraph.
+
+\subsubsection{Third-level Headings} These should use \SI{10}{pt} bold
+letters and be run into the paragraph text. In \LaTeX{} these headings are
+created with \LaTeX's \verb|\subsubsection| command.
+In the Word templates authors must bold the heading text themselves.
+This heading should be used sparingly. See Table~\ref{tab:styles}
+for its style details.
+
+\subsection{Paragraph Text}
+
+Paragraphs should use \SI{10}{pt} font and be justified (touch each side) in
+the column. The beginning of each paragraph should be indented
+approximately \SI{0.33}{cm} (\SI{0.13}{in}). The last line of a paragraph should not be
+printed by itself at the beginning of a column nor should the first line of
+a paragraph be printed by itself at the end of a column.
+
+\subsection{Figures, Tables and Equations}
+
+Place figures and tables as close to their place of mention as
+possible. Lettering in figures and tables should be large enough to
+reproduce clearly. Use of non-approved fonts in figures can lead to
+problems when the files are processed. \LaTeX{} users should be sure to use
+non-bitmapped versions of Computer Modern fonts in equations (Type\,1 PostScript
+or OpenType fonts are required. Their use is described in the help 
+pages of the JACoW website\cite{jacow-help}).
+
+Each figure and table must be numbered in ascending
+order (1, 2, 3, etc.) throughout the paper. 
+Figure captions are placed below figures, and table
+captions are placed above tables.
+
+Figure captions are formatted as shown in Figs.~\ref{fig:paper_layout} and \ref{fig:jacow_team},
+while table captions take the form of a heading,
+with initial letters of principle words, capitalized, and
+without a period at the end (see Tables~\ref{tab:margins} and~\ref{tab:styles}).
+Any reference to the contents of the table should be made from
+the body of the paper rather than from within the table
+caption itself.
+
+Single-line captions are centred in the column, while captions
+that span more than one line should be justified.
+The \LaTeX{} template uses the ‘booktabs’ package to
+format tables. 
+
+When referring to a figure from within the text, the
+convention is to use the abbreviated form [e.\,g., Fig.~1]
+\emph{unless} the reference is at the start of the sentence, in
+which case “Figure” is written in full. Reference to a
+table, however, is never abbreviated [e.\,g., Table~1].
+
+
+If a displayed equation needs a number (i.\,e., it will be
+referenced), place it in parentheses, and flush with the
+right margin of the column. The equation itself should be
+indented and centred, as far as is possible:
+\begin{equation}\label{eq:label}
+    C_B=\frac{q^3}{3\epsilon_{0} mc}=\SI{3.54}{\micro eV/T}
+\end{equation}
+
+When referencing a numbered equation, use the word
+“Equation” at the start of a sentence, and the abbreviated
+form, “Eq.”, if in the text. The equation number is placed
+in parentheses [e.\,g., Eq.~\eqref{eq:label}], which can be 
+achieved in \LaTeX{} using \verb|\eqref{eq:label}|.
+
+\subsection{Units}
+	
+Units should be written using the standard, roman font,
+not the italic font, as shown in Eq.~\eqref{eq:label}.
+An unbreakable space should precede a unit (in \LaTeX{} use a “\verb|\,|”,
+the template uses the ‘siunitx’ package to format units).
+Some examples are: \SI{3}{keV},
+\SI{100}{kW}, \SI{7}{µm}. When a unit appears in a hyphenated,
+compound adjective that precedes a noun, it takes on the
+singular form, e.\,g., the 3.8-metre long undulator.
+
+\subsection{References}
+%
+% References examples given here are not formatted using \cite as there
+%			 are only reference numbers [1] and [2] in the template
+%
+All bibliographical and web references should be numbered and listed at the
+end of the paper in a section called \textbf{REFERENCES}. When citing a
+reference in the text, place the corresponding reference number in square
+brackets~[1]. The reference citations in the text should be numbered
+in ascending order. Multiple citations should appear in
+the same bracket~[3, 4] and
+with ranges where appropriate~[1--4, 10].
+
+A URL or DOI may be included as part of a reference, but its
+hyperlink should NOT be added. The usual practice is to
+use a monospaced font for the URL so as to help distinguish
+it from normal text. In \LaTeX{} the ‘url’ package is used with its 
+default font now being switched to ``newtxtt'' which offers
+a better distinction between ``\texttt{O}'' and ``\texttt{0}''.
+
+For authors to properly cite the resources used when researching
+their papers is an obligation. In the interest of
+promoting uniformity and complete citations, the IEEE
+Editorial Style for Transactions and Journals, which itself 
+adheres to the Chicago Manual of Style, has been adopted~\cite{IEEE}. 
+When citing a periodical, the official abbreviation of the journal 
+should be used\cite{journal-abbreviations}.
+Please consult the appended material, \textbf{ANNEX~B},
+for details. The onus is on authors to pay attention to
+the details of the said style to ensure complete, accurate
+and properly formatted references.
+
+  \begin{table}[h!b]
+	\setlength\tabcolsep{3.5pt}
+	\centering
+	\caption{Summary of Styles}
+	\label{tab:styles}
+	\begin{tabular}{llcc}
+		\toprule
+		\textbf{Style} & \textbf{Font}               & \textbf{Space}  & \textbf{Space} \\
+		&                             & \textbf{Before} & \textbf{After} \\
+		\midrule
+		\textbf{PAPER}  & \SI{14}{pt}                 & \SI{0}{pt}      & \SI{3}{pt}  \\
+		\textbf{TITLE}  & \textbf{UPPERCASE}          &                 &      \\
+		& \textbf{EXCEPT FOR}         &                 &      \\
+		& \textbf{REQUIRED lowercase} &                 &      \\
+		& \textbf{letters}            &                 &      \\
+		& \textbf{Bold}               &                 &      \\[5pt]
+		%\midrule
+		Author list  & \SI{12}{pt}                 & \SI{9}{pt}      & \SI{12}{pt} \\
+		& UPPER- and lowercase        &                 &      \\[5pt]
+		%\midrule
+		\textit{Abstract} & \SI{12}{pt}                 & \SI{0}{pt}      & \SI{3}{pt} \\
+		\textit{Title}  & \textit{Initial Caps}       &                 &      \\
+		& \textit{Italic}             &                 &      \\[5pt]
+		%\midrule
+		\textbf{Section}  & \SI{12}{pt}                 & \SI{9}{pt}      & \SI{3}{pt}  \\
+		\textbf{Heading}  & \textbf{UPPERCASE}          &                 &      \\
+		& \textbf{bold}               &                 &      \\[5pt]
+		%\midrule
+		\textit{Subsection} & \SI{12}{pt}                 & \SI{6}{pt}      & \SI{3}{pt}  \\
+		\textit{Heading}
+                             & \textit{Initial Caps}       &                 &      \\
+		& \textit{Italic}             &                 &      \\[5pt]
+		%\midrule
+		\textbf{Third-level} & \SI{10}{pt}                 & \SI{6}{pt}      & \SI{0}{pt}  \\
+		\textbf{Heading}     
+                            & \textbf{Initial Caps}       &                 &      \\
+		& \textbf{Bold}               &                 &      \\[5pt]
+		%\midrule
+		Figure        & \SI{10}{pt}                 & \SI{3}{pt}      & $\ge$\SI{3}{pt}  \\
+		Captions      &                             &                 &      \\[5pt]
+		%\midrule
+		Table         & \SI{10}{pt}                 & $\ge$\SI{3}{pt} & \SI{3}{pt}  \\
+		Captions      &                             &                 &      \\[5pt]
+		%\midrule
+		Equations     & \SI{10}{pt} base font       & $\ge$\SI{6}{pt}     & $\ge$\SI{6}{pt} \\[5pt]
+		%\midrule
+		References      & \SI{9}{pt}				& \SI{0}{pt}      & \SI{3}{pt} \\
+        when $\le9$ 	& \verb|\bibliography{9}|	&                 &  \\[5pt]
+        Refs. $\ge10$ 	& \SI{9}{pt}				& \SI{0}{pt}      & \SI{3}{pt}  \\
+                		& \verb|\bibliography{99}|	&    &    \\
+		\bottomrule   %\SI{0.25}{in}
+	\end{tabular}
+\end{table}
+
+\subsection{Footnotes}
+
+Footnotes on the title and author lines may be used for acknowledgements
+and e-mail addresses. A non-numeric sequence of characters (*, \#,
+\dag, \ddag, \P) should be used to indicate the footnote.
+These “pseudo footnotes” should only
+appear at the bottom of the first column on the first page.
+
+Any other footnote in the body of the paper should
+use the normal numeric sequencing (i.\,e., 1, 2, 3)
+and appear at the bottom of the same column in which
+it is used.  All footnotes are of 8pt font size.
+
+\subsection{Acronyms}
+
+Acronyms should be defined the first time they appear, 
+both in the abstract and in the rest of the paper. 
+
+\section{STYLES}
+
+Table~\ref{tab:styles} summarizes the fonts and spacing used in the styles of
+a JACoW template. In \LaTeX, these 
+are implemented in the ‘jacow’ class file.
+
+\section{PAGE NUMBERS}
+
+\textbf{DO NOT include any page numbers}. They will be added
+when the final proceedings are produced.
+
+\section{TEMPLATES}
+
+Template documents for the recommended word processing
+software are available from the JACoW website~\cite{jacow-help}
+and exist for \LaTeX, Microsoft Word (Mac and PC)
+and LibreOffice/Apache OpenOffice for US letter and A4
+paper sizes. Use the correct template for your paper size and
+platform.
+
+Fonts are embedded by default with pdf\LaTeX. Using \LaTeX{} with `dvips', 
+make sure that `ps2pdf' has the option \texttt{-dEmbedAllFonts=true}'.
+Fonts of included figure graphics in PDF or EPS are often not embedded. 
+So make sure that this done when generating them or reprocess them 
+in `Ghostscript' with the switch \texttt{-dEmbedAllFonts=true}' set.
+
+\flushcolsend
+
+\section{CHECKLIST FOR ELECTRONIC PUBLICATION}
+Authors are requested to go over the following checklist for electronic publication:
+\begin{Itemize}
+	\item  Use only Times or Times New Roman (standard, bold or italic) and Symbol
+	fonts for text, \SI{10}{pt} except references, which should be \SI{9}{pt}.
+	
+	\item  Figures should use Times or Times New Roman (standard, bold or italic) and
+	Symbol fonts when possible---\SI{6}{pt} minimum, with fonts embedded.
+	\item  Check that citations to references appear in sequential order and
+	that all references are cited.
+	\item  Check that the PDF file prints correctly.
+	\item  Check that there are no page numbers.
+	\item  Check that the margins on the printed version are within \SI{\pm1}{mm}
+	of the specifications.
+	\item  \LaTeX{} users can check their margins by invoking the
+	\texttt{boxit} option.
+\end{Itemize}
+
+Please also check the list of common oversights which can be found in \textbf{ANNEX C}.
+
+\section{CONCLUSION}
+
+Any conclusions should be in a separate section directly preceding
+the \textbf{ACKNOWLEDGEMENTS}, \textbf{APPENDIX}, or \textbf{REFERENCES} sections, in that
+order.
+
+\section{ACKNOWLEDGEMENTS}
+Any acknowledgement should be in a separate section directly preceding
+the \textbf{REFERENCES} or \textbf{APPENDIX} section.
+
+
+\section{APPENDIX}
+Any appendix should be in a separate section directly preceding
+the \textbf{REFERENCES} section. If there is no \textbf{REFERENCES} section,
+this should be the last section of the paper.
+
+%
+% only for "biblatex"
+%
+\ifboolexpr{bool{jacowbiblatex}}%
+	{\printbibliography}%
+	{%
+	% "biblatex" is not used, go the "manual" way
+	
+	%\begin{thebibliography}{99}   % Use for  10-99  references
+	\begin{thebibliography}{9} % Use for 1-9 references
+	
+	\bibitem{jacow-help}
+		JACoW,
+		\url{http://www.jacow.org}
+	
+	\bibitem{IEEE}
+		\textit{IEEE Editorial Style Manual},
+		IEEE Periodicals, Piscataway,
+		NJ, USA, Oct. 2014, pp. 34--52.
+
+	\bibitem{journal-abbreviations}
+	\url{https://woodward.library.ubc.ca/researchhelp/journal-abbreviations/}
+
+	\end{thebibliography}
+} % end \ifboolexpr
+%
+% for use as JACoW template the inclusion of the ANNEX parts have been commented out
+% to generate the complete documentation please remove the "%" of the next two commands
+% 
+%%%\newpage
+
+%%%\include{annexes-A4}
+
+\end{document}
