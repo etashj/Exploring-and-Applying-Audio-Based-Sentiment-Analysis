@@ -3,17 +3,21 @@ import librosa
 import numpy as np
 from models import MusicEmotionLSTM, LSTMPredictionModel
 
+# Define cusomt exceptions
 class AudioTooShort(Exception):
     pass
 class SamplingRateError(Exception):
     pass
 
+# Song class fro predition
 class Song: 
+    # Constructor either takes a librosa loaded audio clip or path
+    # Sets up pytorch device
     def __init__(self, audio):
         if not((type(audio) is tuple) and (type(audio[0]) is np.ndarray)): 
             audio = librosa.load(audio, sr=44100)
         if audio[1] != 44100: 
-            raise SamplingRateError("Please load your audio with sampling rate of 44100kHz")
+            raise SamplingRateError("Please load your audio with sampling rate of 44.1kHz")
         self.audio, self.sr = audio
 
         if torch.backends.mps.is_available():
@@ -25,9 +29,12 @@ class Song:
         
         self.emotions=None
     
+    # String representation of audio
     def __str__(self): 
         return self.audio
 
+    # Takes loaded audio, does a mel spectrogram, and passes it to the mode
+    # Returns a tensor of the predicted arousal and valence vectors and sets them to self.emotions
     def getEmotions(self): 
         rem = len(self.audio) % 22050
         clips = []
@@ -67,7 +74,8 @@ class Song:
 
         return out
 
-    
+    # Takes 10 0.5 second samples (by defualt the last 10) that have emotion already predicted and predicts the next value
+    # If emotion not predicted/stored in self.emotions, runs getEmotions() function
     def predictNext(self, startInd:int = -1): 
         if self.emotions==None: 
             self.getEmotions()
@@ -93,9 +101,10 @@ class Song:
 
         return out.squeeze()
 
+    # Checks if a song is within the range (± tolerance) of the predicted next value to be queued next and match arousal and valence
     def isNext(self, next:"Song", tol=0.05): 
         a1, v1 = self.predictNext().tolist()
-        a2, v2 = next.predictNext().tolist()
+        a2, v2 = next.getEmotions().tolist()[0]
 
         if (a2 < a1+tol and a2 > a1-tol) and (v2 < v1+tol and v2 > v1-tol): 
             return True
