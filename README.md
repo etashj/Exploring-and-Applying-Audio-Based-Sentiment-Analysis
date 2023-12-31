@@ -29,7 +29,8 @@ You can then install requirements and make the dataset and train models.
  ## File Guide
  ### [`scripts`](scripts) Directory
  - [`scripts/demo.py`](scripts/demo.py): Potential implementation fo a `Song` class to host the model(s) and be released as a package
-
+    - Implements the `Song` class with methods `getEmotions()`, `predictNext()`, and `isNext()` and shows example usage
+    - More details included in comments of the file
  - [`scripts/models.py`](scripts/models.py): Hosts both models so they can be imported to the `demo.py` class and training files
  - [`scripts/emotion_train.py`](scripts/emotion_train.py): Train the emotion predictor to predict arousal and valence values from mel spectrogram data
  - [`scripts/predictor_train.py`](scripts/predictor_train.py): Train an LSTM model to predict the next pair of arousal and valence values from 10 existing pairs/vectors
