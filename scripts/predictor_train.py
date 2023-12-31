@@ -126,7 +126,6 @@ for epoch in range(num_epochs):
 
 
 
-
 torch.save(model, "models/predictor.pth")
 
 test_loss = 0
