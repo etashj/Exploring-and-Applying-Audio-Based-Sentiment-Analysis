@@ -43,7 +43,7 @@ You can then install requirements, make the dataset, and train models.
  - [`scripts/data_preparation/create_dataset.py`](scripts/data_preparation/create_dataset.py): Created HDF5 with Mel Spectrogram data prior to training to save time
  - [`scripts/data_preparation/resample.sh`](scripts/data_preparation/resample.sh): Bash script to resample audio to be 44.1kHz
 
- #### [scripts/plotting](scripts/plotting/) Directory
+ #### [`scripts/plotting`](scripts/plotting/) Directory
  - [`scripts/plotting/plot_single.py`](scripts/plotting/plot_single.py): Plot the arousal and valence values over time from a single song from the dataset
  - [`scripts/plotting/plot_all.py`](scripts/plotting/plot_all.py): Plot all of the arousal and valence values of every song over time
 
