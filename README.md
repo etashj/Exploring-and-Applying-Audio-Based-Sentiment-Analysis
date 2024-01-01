@@ -1,6 +1,7 @@
 # Exploring and Applying Audio-Based Sentiment Analysis
 
 **Etash Jhanji's code relating to project submission for PJAS and PRSEF science fairs**
+**Manuscript in preparation.**
 
 ## Info
 Sentiment analysis is a continuously explored area of text processing that deals with the computational analysis of opinions, sentiments, and subjectivity of text. However, this idea is not limited to text, in fact, it could be applied to other modalities. In reality, humans do not express themselves in text as deeply as in speech or music. The ability of a computational model to interpret musical emotions is not as deeply explored and could have implications and uses beyond a computation discovery, in uses for therapy and music queuing.
