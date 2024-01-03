@@ -167,3 +167,4 @@ data/
 /scripts/misc
 latex/
 presentation/
+scripts/plotting/replot.py
