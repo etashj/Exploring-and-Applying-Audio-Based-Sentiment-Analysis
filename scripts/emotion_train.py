@@ -203,8 +203,8 @@ model = MusicEmotionLSTM(input_size, hidden_size, num_layers, output_size).to(de
 
 # Declare criterion for loss
 criterion = nn.MSELoss()
-# Uses Adam optim with leanring rate of 0.000075
-optimizer = Adam(model.parameters(), lr=0.000075)
+# Uses Adam optim with leanring rate of 0.00005
+optimizer = Adam(model.parameters(), lr=0.00005)
 
 # Setup variables for early stopping
 best_val_loss = np.inf
