@@ -5,6 +5,9 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
+plt.rcParams.update({'font.size': 8})
+plt.style.use('seaborn-v0_8')
+
 song_id = int(input("Enter song id: "))
 
 arousal_df = pd.read_csv("data/annotations/arousal_cont_average.csv")
@@ -57,4 +60,5 @@ plt.ylabel('Valence')
 plt.legend()
 
 plt.tight_layout()
+plt.savefig("latex/images/linreg.png", dpi=300)
 plt.show()
