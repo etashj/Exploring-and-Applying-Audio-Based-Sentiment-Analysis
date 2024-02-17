@@ -1,0 +1,63 @@
+.
+├── LICENSE
+├── README.md
+├── data
+│   ├── LINKS.png
+│   ├── annotations
+│   │   ├── arousal_cont_average.csv
+│   │   ├── arousal_cont_std.csv
+│   │   ├── songs_info.csv
+│   │   ├── static_annotations.csv
+│   │   ├── valence_cont_average.csv
+│   │   └── valence_cont_std.csv
+│   ├── annotations_new
+│   │   ├── arousal_cont_10.csv
+│   │   ├── combined_10.csv
+│   │   └── valence_cont_10.csv
+│   ├── clips_45seconds  [1000 entries exceeds filelimit, not opening dir]
+│   ├── clips_45seconds_wav_resamp  [1000 entries exceeds filelimit, not opening dir]
+│   ├── clips_45seconds_wav_resamp.zip
+│   ├── dataset.hdf5
+│   ├── mel_10s.hdf5
+│   ├── mel_10s_2.hdf5
+│   ├── mfcc_10s.hdf5
+│   └── mfcc_10s_noise_25.hdf5
+├── models
+│   ├── model.pth
+│   ├── model_state_dict.pth
+│   ├── predictor.pth
+│   └── predictor_state_dict.pth
+├── requirements.txt
+├── results
+│   ├── loss.json
+│   ├── loss.png
+│   ├── predictor.json
+│   └── predictor_loss.png
+├── scripts
+│   ├── data_preparation
+│   │   ├── audio_process.py
+│   │   ├── create_dataset.py
+│   │   └── resample.sh
+│   ├── demo.py
+│   ├── emotion_train.py
+│   ├── linreg_predictor.py
+│   ├── misc
+│   │   ├── adapt_csv.py
+│   │   ├── combineCSV_5.py
+│   │   ├── combine_csv.py
+│   │   ├── gtrain_10.py
+│   │   ├── mfcc_10_lstm.py
+│   │   ├── mfcc_10s_train.py
+│   │   ├── mfcc_pre_10s.py
+│   │   ├── pre_10s.py
+│   │   ├── pretrain_mel_10s.py
+│   │   ├── train_10s.py
+│   │   └── verify.py
+│   ├── models.py
+│   ├── plotting
+│   │   ├── plot_all.py
+│   │   ├── plot_single.py
+│   │   ├── replot_loss.py
+│   │   └── waveform.py
+│   └── predictor_train.py
+└── venv
